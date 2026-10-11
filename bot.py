@@ -33,8 +33,8 @@ def add_text_to_image(image_bytes: bytes) -> BytesIO:
     draw = ImageDraw.Draw(img)
 
     # --- የፎንት መጠን (Font Size) ---
-    # እዚህ ጋር 0.10 ማለት ከፎቶው ስፋት 10% ማለት ነው። የፈለከውን ያህል ትልቅ ለማድረግ ቁጥሩን ጨምር (ለምሳሌ 0.12 ወይም 0.15)።
-    am_size = int(img.width * 0.11)  # የአማርኛ ፎንት መጠን (ትልቅ አድርጌዋለሁ)
+    # እዚህ ጋር 0.11 ማለት ከፎቶው ስፋት 11% ማለት ነው። የፈለከውን ያህል ትልቅ ለማድረግ ቁጥሩን ጨምር (ለምሳሌ 0.15)።
+    am_size = int(img.width * 0.11)  # የአማርኛ ፎንት መጠን
     en_size = int(img.width * 0.05)  # የእንግሊዝኛ ፎንት መጠን
 
     try:
