@@ -1,6 +1,7 @@
 git init
 git add .
-git commit -m "Telegram bot with webhook"
+git commit -m "Fixed Amharic font and updated code"
 git branch -M main
-git remote add origin https://github.com/beyene4445-jpg/Photo-ocean/telegram-bot.git
+# ከታች ያለው አድራሻ ትክክለኛው መሆኑን አረጋግጥ (የ telegram-bot.git የሚለው አያስፈልግም)
+git remote add origin https://github.com/beyene4445-jpg/Photo-ocean.git
 git push -u origin main
