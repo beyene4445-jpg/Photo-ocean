@@ -1,0 +1,6 @@
+git init
+git add .
+git commit -m "Telegram bot with webhook"
+git branch -M main
+git remote add origin https://github.com/beyene4445-jpg/Photo-ocean/telegram-bot.git
+git push -u origin main
