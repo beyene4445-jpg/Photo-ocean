@@ -11,7 +11,7 @@ WEBHOOK_URL = os.environ.get("WEBHOOK_URL")
 PORT = int(os.environ.get("PORT", 8080))
 
 # --- የፎንት ፋይሎች ስም ---
-# ማሳሰቢያ፡ በ GitHub ላይ ያለው የፎንት ፋይል ስም ከዚህ ጋር በትክክል መመሳሰሉን አረጋግጥ
+# ማሳሰቢያ፡ በ GitHub ላይ ያለው የፎንት ፋይል ስም ከዚህ ጋር በትክክል መመሳሰሉን አረጋግጥ!
 AMHARIC_FONT = "NotoSansEthiopic-Bold.ttf" 
 ENGLISH_FONT = "arialbd.ttf" 
 
@@ -32,9 +32,10 @@ def add_text_to_image(image_bytes: bytes) -> BytesIO:
 
     draw = ImageDraw.Draw(img)
 
-    # --- በፎቶው መጠን መሠረት የፎንት መጠን ---
-    am_size = int(img.width * 0.075)
-    en_size = int(img.width * 0.045)
+    # --- የፎንት መጠን (Font Size) ---
+    # እዚህ ጋር 0.10 ማለት ከፎቶው ስፋት 10% ማለት ነው። የፈለከውን ያህል ትልቅ ለማድረግ ቁጥሩን ጨምር (ለምሳሌ 0.12 ወይም 0.15)።
+    am_size = int(img.width * 0.11)  # የአማርኛ ፎንት መጠን (ትልቅ አድርጌዋለሁ)
+    en_size = int(img.width * 0.05)  # የእንግሊዝኛ ፎንት መጠን
 
     try:
         am_font = ImageFont.truetype(AMHARIC_FONT, am_size)
@@ -78,9 +79,9 @@ def add_text_to_image(image_bytes: bytes) -> BytesIO:
     line_y = am_y + (am_bbox[3] - am_bbox[1]) // 2
     pad = int(img.width * 0.03)
     draw.line([(am_x - pad - 60, line_y), (am_x - pad, line_y)],
-              fill=(255, 215, 0), width=3)
+              fill=(255, 215, 0), width=4)
     draw.line([(am_x + am_w + pad, line_y), (am_x + am_w + pad + 60, line_y)],
-              fill=(255, 215, 0), width=3)
+              fill=(255, 215, 0), width=4)
 
     out = BytesIO()
     out.name = "blessed.jpg"
@@ -98,7 +99,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # --- ፎቶ ሲላክ የሚሠራ ተግባር ---
 async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     msg = update.message
-    # ትልቁን ፎቶ (ከፍተኛ quality) አንሳ
     photo = msg.photo[-1]
     file = await photo.get_file()
     data = await file.download_as_bytearray()
@@ -115,11 +115,9 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 def main():
     app = Application.builder().token(BOT_TOKEN).build()
     
-    # ትዕዛዞችን መዝግብ
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
 
-    # ዌብሁክ ማስጀመር (ለ Render)
     print("🤖 Bot ተጀምሯል...")
     app.run_webhook(
         listen="0.0.0.0",
